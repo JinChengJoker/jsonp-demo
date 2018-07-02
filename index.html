@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jsonp demo</title>
+</head>
+<body>
+    <h5>当前余额：<span id="amount">100</span></h5>
+    <button id="btn">支付一元</button>
+
+    <script>
+        btn.addEventListener('click', function(e) {
+            amount.innerText -= 1
+        })
+    </script>
+</body>
+</html>
