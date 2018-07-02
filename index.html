@@ -7,13 +7,25 @@
     <title>jsonp demo</title>
 </head>
 <body>
-    <h5>当前余额：<span id="amount">100</span></h5>
+    <h5>当前余额：<span id="amount">&&amount&&</span></h5>
     <button id="btn">支付一元</button>
 
     <script>
-        btn.addEventListener('click', function(e) {
-            amount.innerText -= 1
+        btn.addEventListener('click', function() {
+            addScriptTag('/pay')
         })
+
+        function addScriptTag(src) {
+            var script = document.createElement('script')
+            script.src = src
+            document.body.appendChild(script)
+            script.onload = function(e) {
+                e.currentTarget.remove()
+            }
+            script.onerror = function(e) {
+                e.currentTarget.remove()
+            }
+        }
     </script>
 </body>
 </html>

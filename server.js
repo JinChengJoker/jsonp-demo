@@ -18,9 +18,19 @@ var server = http.createServer(
         console.log('HTTP 请求路径为：\n' + path)
         // 判断 HTTP 请求路径
         if(path === '/') {
+            var amount = fs.readFileSync('./db', 'utf8')
             var data = fs.readFileSync('./index.html', 'utf8')
+            data = data.replace('&&amount&&', amount)
             response.setHeader('Content-Type', 'text/html; charset=utf-8')
             response.write(data)
+            response.end()
+        } else if(path === '/pay') {
+            var amount = fs.readFileSync('./db', 'utf8')
+            amount -= 1
+            fs.writeFileSync('./db', amount)
+            response.statusCode = 200
+            response.setHeader('Content-Type', 'application/javascript')
+            response.write('amount.innerText = ' + amount)
             response.end()
         } else {
             // 找不到对应的请求路径，返回错误码404
