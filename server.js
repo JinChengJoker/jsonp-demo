@@ -26,11 +26,16 @@ var server = http.createServer(
             response.end()
         } else if(path === '/pay') {
             var amount = fs.readFileSync('./db', 'utf8')
+            var callbackName = query.callback
             amount -= 1
             fs.writeFileSync('./db', amount)
             response.statusCode = 200
             response.setHeader('Content-Type', 'application/javascript')
-            response.write('amount.innerText = ' + amount)
+            response.write(`
+                ${callbackName}({
+                    amount: ${amount}
+                })
+            `)
             response.end()
         } else {
             // 找不到对应的请求路径，返回错误码404

@@ -12,7 +12,14 @@
 
     <script>
         btn.addEventListener('click', function() {
-            addScriptTag('/pay')
+            // 每次请求都定义一个随机的函数
+            var functionName = 'jsonp'+ parseInt(Math.random()*1000000)
+            window[functionName] = function(res) {
+                // 请求成功后要执行的操作
+                amount.innerText = res.amount
+                delete window[functionName]
+            }
+            addScriptTag('/pay?callback=' + functionName)
         })
 
         function addScriptTag(src) {
